@@ -4,12 +4,12 @@ import './style.scss';
 
 type Props = {
   answer: Answer;
-  getAnser: () => void;
+  getAnswer: () => void;
 };
 
-const AnswerComponent = ({ getAnser, answer }: Props) => {
+const AnswerComponent = ({ getAnswer, answer }: Props) => {
   return (
-    <button className='answer-btn' onClick={getAnser}>
+    <button className='answer-btn' onClick={getAnswer}>
       {answer.label}
     </button>
   );

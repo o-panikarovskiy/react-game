@@ -9,9 +9,12 @@ const CountdownComponent = ({ seconds, expire }: Props) => {
   const [count, setCount] = useState(seconds);
 
   useEffect(() => {
-    setCount(seconds);
     const id = setInterval(() => setCount((v) => v - 1), 1000);
     return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    setCount(seconds);
   }, [seconds]);
 
   useEffect(() => {

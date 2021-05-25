@@ -8,6 +8,7 @@ const GameWrap = () => {
   const {
     state: { gameStatus },
   } = useContext(GameContext);
+
   const showHome = !gameStatus || gameStatus === 'finished';
   return <main className='main'>{showHome ? <Home /> : <Game />}</main>;
 };

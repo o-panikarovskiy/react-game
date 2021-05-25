@@ -1,6 +1,6 @@
 [
   {
-    "title": "Qestion #1",
+    "title": "Question #1",
     "timeout": 10,
     "score": 100,
     "answers": [
@@ -20,7 +20,7 @@
     ]
   },
   {
-    "title": "Qestion #2",
+    "title": "Question #2",
     "timeout": 15,
     "score": 200,
     "answers": [
@@ -36,6 +36,26 @@
       },
       {
         "label": "A4"
+      }
+    ]
+  },
+  {
+    "title": "Question #3",
+    "timeout": 25,
+    "score": 300,
+    "answers": [
+      {
+        "label": "A1"
+      },
+      {
+        "label": "A2"
+      },
+      {
+        "label": "A3"
+      },
+      {
+        "label": "A4",
+        "right": true
       }
     ]
   }

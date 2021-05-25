@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { ReactNode, useContext, useEffect } from 'react';
 import QuestionComponent from '../../components/question/index';
 import { GameContext } from '../../store/context';
 import * as store from '../../store/store.service';
@@ -13,17 +13,40 @@ const Game = () => {
     return () => abortCtrl.abort();
   }, [dispatch]);
 
-  const { isQuestionsLoading, loadingError } = state;
+  const { currentQuestion, isQuestionsLoading, loadingError, questions } = state;
+  const isLast = questions[questions.length - 1] === currentQuestion;
+
+  let errorNode: ReactNode;
+  let questionNode: ReactNode;
+  let loadingNode: ReactNode;
+
+  if (isQuestionsLoading) {
+    loadingNode = <div>Loading...</div>;
+  }
+
+  if (loadingError) {
+    errorNode = <div>{loadingError.message}</div>;
+  }
+
+  if (currentQuestion) {
+    const { totalScore, health } = state;
+    questionNode = (
+      <QuestionComponent
+        isLast={isLast}
+        health={health}
+        totalScore={totalScore}
+        question={currentQuestion}
+        next={(a) => store.setAnswer(dispatch, a)}
+        countdownExpire={() => store.answerTimesUp(dispatch)}
+      />
+    );
+  }
 
   return (
     <div className='game'>
-      {isQuestionsLoading ? (
-        <div>Loading...</div>
-      ) : loadingError ? (
-        <div>{loadingError.message}</div>
-      ) : (
-        <QuestionComponent />
-      )}
+      {loadingNode}
+      {errorNode}
+      {questionNode}
     </div>
   );
 };

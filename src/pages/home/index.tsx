@@ -5,17 +5,13 @@ import './style.scss';
 
 const Home = () => {
   const {
-    state: { gameStatus, totalScore },
     dispatch,
+    state: { gameStatus, totalScore },
   } = useContext(GameContext);
 
   let reward: React.ReactNode;
   if (gameStatus === 'finished') {
-    reward = (
-      <>
-        <h1 className='score'>Total Score: ${totalScore}</h1>
-      </>
-    );
+    reward = <h1 className='score'>Total Score: ${totalScore}</h1>;
   }
 
   return (

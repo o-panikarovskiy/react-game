@@ -30,7 +30,7 @@ export const reducer = (state: GameState, action: Action): GameState => {
 
     case QUESTION_TIMES_UP: {
       return {
-        ...initialState,
+        ...state,
         gameStatus: 'finished',
       };
     }

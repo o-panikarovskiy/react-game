@@ -1,25 +1,21 @@
-import React, { useContext } from 'react';
-import { GameContext } from '../../store/context';
-import * as store from '../../store/store.service';
+import React from 'react';
 import CountdownComponent from '../countdown/index';
 import './style.scss';
 
-const StatusComponent = () => {
-  const {
-    state: { totalScore, currentQuestion, health },
-    dispatch,
-  } = useContext(GameContext);
+type Props = {
+  countdown: number;
+  totalScore: number;
+  health: number;
+  countdownExpire: () => void;
+};
 
-  if (!currentQuestion) {
-    return <></>;
-  }
-
+const StatusComponent = ({ countdownExpire, countdown, totalScore, health }: Props) => {
   return (
     <div className='status'>
       <span>Score: ${totalScore}</span>
       <span>Health: ♥️{health}</span>
       <span>
-        Timer: <CountdownComponent seconds={currentQuestion.timeout} expire={() => store.answerTimesUp(dispatch)} />
+        Timer: <CountdownComponent seconds={countdown} expire={countdownExpire} />
       </span>
     </div>
   );

@@ -1,11 +1,12 @@
 .answer-btn {
-  background-color: #2fa102;
+  background-color: #aaa;
   color: #fff;
   width: 200px;
   border: 1px solid #ccc;
   margin-bottom: 10px;
 
   &:hover {
-    background-color: #6ff82f;
+    color: #000;
+    background-color: #ddd;
   }
 }
