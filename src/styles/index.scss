@@ -1,0 +1,43 @@
+html {
+  box-sizing: border-box;
+  font-size: 20px;
+  overflow: hidden;
+  height: 100%;
+
+  @media (max-width: 1018px) {
+    font-size: 17px;
+  }
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  border: 0;
+  cursor: pointer;
+  outline: none;
+  background-color: #fff;
+  min-height: 3.2rem;
+  padding: 0 0.5rem;
+}
+
+body,
+#root {
+  overflow: hidden;
+  height: 100%;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+ul {
+  list-style-type: none;
+}

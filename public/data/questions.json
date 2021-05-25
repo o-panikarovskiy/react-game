@@ -1,0 +1,42 @@
+[
+  {
+    "title": "Qestion #1",
+    "timeout": 10,
+    "score": 100,
+    "answers": [
+      {
+        "label": "A1"
+      },
+      {
+        "label": "A2",
+        "right": true
+      },
+      {
+        "label": "A3"
+      },
+      {
+        "label": "A4"
+      }
+    ]
+  },
+  {
+    "title": "Qestion #2",
+    "timeout": 10,
+    "score": 200,
+    "answers": [
+      {
+        "label": "A1"
+      },
+      {
+        "label": "A2"
+      },
+      {
+        "label": "A3",
+        "right": true
+      },
+      {
+        "label": "A4"
+      }
+    ]
+  }
+]

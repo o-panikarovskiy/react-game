@@ -1,0 +1,18 @@
+.home {
+  .start-btn {
+    background-color: #ff8b37;
+    border-radius: 6px;
+    color: #fff;
+    width: 300px;
+
+    &:hover {
+      background-color: #ffac70;
+    }
+  }
+
+  .score {
+    text-align: center;
+    background-color: #fff;
+    margin-bottom: 20px;
+  }
+}
