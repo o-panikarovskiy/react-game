@@ -3,6 +3,7 @@ import { AppError } from '../types/http-error';
 export type GameStatus = 'started' | 'finished';
 
 export type GameState = {
+  readonly health: number;
   readonly totalScore: number;
   readonly questions: readonly Question[];
   readonly currentQuestion?: Question;

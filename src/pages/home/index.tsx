@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { GameContext } from '../../store/context';
-import { startGame } from '../../store/store.service';
+import * as store from '../../store/store.service';
 import './style.scss';
 
 const Home = () => {
@@ -21,7 +21,7 @@ const Home = () => {
   return (
     <section className='home'>
       {reward}
-      <button className='start-btn' onClick={() => startGame(dispatch)}>
+      <button className='start-btn' onClick={() => store.startGame(dispatch)}>
         {gameStatus === 'finished' ? 'Try Again' : 'Start'}
       </button>
     </section>

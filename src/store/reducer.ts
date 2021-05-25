@@ -9,6 +9,7 @@ import Action, {
 import { Answer, GameState, GameStatus } from './models';
 
 export const initialState: GameState = {
+  health: 3,
   totalScore: 0,
   questions: [],
   isQuestionsLoading: false,
@@ -65,17 +66,19 @@ export const reducer = (state: GameState, action: Action): GameState => {
 };
 
 const setAnswer = (state: GameState, answer: Answer): GameState => {
-  const { currentQuestion, questions, totalScore } = state;
+  const { currentQuestion, questions, totalScore, health } = state;
   if (!currentQuestion) return state;
 
   const qidx = questions.findIndex((q) => q === currentQuestion);
+  const healthNew = health + (answer.right ? 0 : -1);
   const score = totalScore + (answer.right ? currentQuestion.score : 0);
   const nextQuestion = questions[qidx + 1];
-  const gameStatus: GameStatus | undefined = !nextQuestion ? 'finished' : state.gameStatus;
+  const gameStatus: GameStatus | undefined = !nextQuestion || healthNew === 0 ? 'finished' : state.gameStatus;
 
   return {
     ...state,
     gameStatus,
+    health: healthNew,
     totalScore: score,
     currentQuestion: nextQuestion,
   };

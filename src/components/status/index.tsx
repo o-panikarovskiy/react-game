@@ -6,7 +6,7 @@ import './style.scss';
 
 const StatusComponent = () => {
   const {
-    state: { totalScore, currentQuestion },
+    state: { totalScore, currentQuestion, health },
     dispatch,
   } = useContext(GameContext);
 
@@ -17,6 +17,7 @@ const StatusComponent = () => {
   return (
     <div className='status'>
       <span>Score: ${totalScore}</span>
+      <span>Health: ♥️{health}</span>
       <span>
         Timer: <CountdownComponent seconds={currentQuestion.timeout} expire={() => store.answerTimesUp(dispatch)} />
       </span>
