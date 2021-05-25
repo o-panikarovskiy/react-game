@@ -7,12 +7,12 @@ type Props = {
   getAnser: () => void;
 };
 
-function AnswerComponent({ getAnser, answer }: Props) {
+const AnswerComponent = ({ getAnser, answer }: Props) => {
   return (
     <button className='answer-btn' onClick={getAnser}>
       {answer.label}
     </button>
   );
-}
+};
 
 export default AnswerComponent;

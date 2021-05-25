@@ -4,7 +4,7 @@ import * as store from '../../store/store.service';
 import CountdownComponent from '../countdown/index';
 import './style.scss';
 
-function StatusComponent() {
+const StatusComponent = () => {
   const {
     state: { totalScore, currentQuestion },
     dispatch,
@@ -18,10 +18,10 @@ function StatusComponent() {
     <div className='status'>
       <span>Score: ${totalScore}</span>
       <span>
-        Timer: <CountdownComponent seconds={currentQuestion.timeout} countdown={() => store.answerTimesUp(dispatch)} />
+        Timer: <CountdownComponent seconds={currentQuestion.timeout} expire={() => store.answerTimesUp(dispatch)} />
       </span>
     </div>
   );
-}
+};
 
 export default StatusComponent;

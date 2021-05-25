@@ -4,7 +4,7 @@ import { GameContext } from '../../store/context';
 import * as store from '../../store/store.service';
 import './style.scss';
 
-function Game() {
+const Game = () => {
   const { state, dispatch } = useContext(GameContext);
 
   useEffect(() => {
@@ -26,6 +26,6 @@ function Game() {
       )}
     </div>
   );
-}
+};
 
 export default Game;

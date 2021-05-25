@@ -5,7 +5,7 @@ import AnswerComponent from '../answer/index';
 import StatusComponent from '../status/index';
 import './style.scss';
 
-function QuestionComponent() {
+const QuestionComponent = () => {
   const {
     state: { currentQuestion },
     dispatch,
@@ -24,6 +24,6 @@ function QuestionComponent() {
       </div>
     </>
   );
-}
+};
 
 export default QuestionComponent;

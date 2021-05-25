@@ -3,7 +3,7 @@ import { GameContext } from '../../store/context';
 import { startGame } from '../../store/store.service';
 import './style.scss';
 
-function Home() {
+const Home = () => {
   const {
     state: { gameStatus, totalScore },
     dispatch,
@@ -26,6 +26,6 @@ function Home() {
       </button>
     </section>
   );
-}
+};
 
 export default Home;
