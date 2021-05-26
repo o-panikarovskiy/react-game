@@ -1,5 +1,5 @@
 import Action, { QUESTION_TIMES_UP, SET_ANSWER, SET_QUESTIONS, START_GAME } from './actions';
-import { GameState, GameStatus } from './models';
+import { GameState } from './models';
 
 export const initialState: GameState = {
   ratings: [],
@@ -22,7 +22,7 @@ export const reducer = (state: GameState, action: Action): GameState => {
 
       const qidx = questions.findIndex((q) => q === currentQuestion);
       const nextQuestion = questions[qidx + 1];
-      const gameStatus: GameStatus | undefined = !nextQuestion || player.health === 0 ? 'finished' : state.gameStatus;
+      const gameStatus = !nextQuestion || player.health === 0 ? 'finished' : state.gameStatus;
 
       return {
         ...state,
