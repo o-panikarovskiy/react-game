@@ -1,18 +1,9 @@
-import Action, {
-  QUESTION_TIMES_UP,
-  REQ_QUESTIONS,
-  REQ_QUESTIONS_ERROR,
-  REQ_QUESTIONS_SUCCESS,
-  SET_ANSWER,
-  START_GAME,
-} from './actions';
-import { Answer, GameState, GameStatus } from './models';
+import Action, { QUESTION_TIMES_UP, SET_ANSWER, SET_QUESTIONS, START_GAME } from './actions';
+import { GameState, GameStatus } from './models';
 
 export const initialState: GameState = {
-  health: 3,
-  totalScore: 0,
+  ratings: [],
   questions: [],
-  isQuestionsLoading: false,
 };
 
 export const reducer = (state: GameState, action: Action): GameState => {
@@ -20,12 +11,26 @@ export const reducer = (state: GameState, action: Action): GameState => {
     case START_GAME: {
       return {
         ...initialState,
+        player: action.payload,
         gameStatus: 'started',
       };
     }
 
     case SET_ANSWER: {
-      return setAnswer(state, action.payload);
+      const { player, ratings } = action.payload;
+      const { currentQuestion, questions } = state;
+
+      const qidx = questions.findIndex((q) => q === currentQuestion);
+      const nextQuestion = questions[qidx + 1];
+      const gameStatus: GameStatus | undefined = !nextQuestion || player.health === 0 ? 'finished' : state.gameStatus;
+
+      return {
+        ...state,
+        player,
+        ratings,
+        gameStatus,
+        currentQuestion: nextQuestion,
+      };
     }
 
     case QUESTION_TIMES_UP: {
@@ -35,51 +40,16 @@ export const reducer = (state: GameState, action: Action): GameState => {
       };
     }
 
-    case REQ_QUESTIONS: {
-      return {
-        ...state,
-        isQuestionsLoading: true,
-      };
-    }
-
-    case REQ_QUESTIONS_SUCCESS: {
+    case SET_QUESTIONS: {
       const questions = action.payload;
       return {
         ...state,
         questions,
         currentQuestion: questions[0],
-        isQuestionsLoading: false,
-      };
-    }
-
-    case REQ_QUESTIONS_ERROR: {
-      return {
-        ...state,
-        loadingError: action.payload,
-        isQuestionsLoading: false,
       };
     }
 
     default:
       return state;
   }
-};
-
-const setAnswer = (state: GameState, answer: Answer): GameState => {
-  const { currentQuestion, questions, totalScore, health } = state;
-  if (!currentQuestion) return state;
-
-  const qidx = questions.findIndex((q) => q === currentQuestion);
-  const healthNew = health + (answer.right ? 0 : -1);
-  const score = totalScore + (answer.right ? currentQuestion.score : 0);
-  const nextQuestion = questions[qidx + 1];
-  const gameStatus: GameStatus | undefined = !nextQuestion || healthNew === 0 ? 'finished' : state.gameStatus;
-
-  return {
-    ...state,
-    gameStatus,
-    health: healthNew,
-    totalScore: score,
-    currentQuestion: nextQuestion,
-  };
 };

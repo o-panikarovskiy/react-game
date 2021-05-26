@@ -1,15 +1,11 @@
-import { AppError } from '../types/http-error';
-
 export type GameStatus = 'started' | 'finished';
 
 export type GameState = {
-  readonly health: number;
-  readonly totalScore: number;
+  readonly ratings: readonly Player[];
   readonly questions: readonly Question[];
   readonly currentQuestion?: Question;
-  readonly isQuestionsLoading: boolean;
+  readonly player?: Player;
   readonly gameStatus?: GameStatus;
-  readonly loadingError?: AppError;
 };
 
 export type Question = {
@@ -22,4 +18,15 @@ export type Question = {
 export type Answer = {
   readonly label: string;
   readonly right?: boolean;
+};
+
+export type Player = {
+  readonly name: string;
+  readonly health: number;
+  readonly score: number;
+};
+
+export type AnswerResponse = {
+  readonly ratings: readonly Player[];
+  readonly player: Player;
 };

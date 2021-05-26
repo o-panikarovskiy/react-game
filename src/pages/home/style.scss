@@ -1,12 +1,22 @@
 .home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
   .start-btn {
     background-color: #ff8b37;
     border-radius: 6px;
     color: #fff;
     width: 300px;
+    margin-top: 10px;
 
     &:hover {
       background-color: #ffac70;
+    }
+
+    &:disabled {
+      background-color: #ccc;
     }
   }
 
@@ -14,5 +24,22 @@
     text-align: center;
     background-color: #fff;
     margin-bottom: 20px;
+  }
+
+  .ratings {
+    background-color: #fff;
+    width: 100%;
+
+    td {
+      &:first-child {
+        width: 400px;
+      }
+    }
+  }
+
+  .username {
+    height: 32px;
+    font-size: 16px;
+    width: 100%;
   }
 }

@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { Answer, Question } from '../../store/models';
+import { Answer, Player, Question } from '../../store/models';
 import AnswerComponent from '../answer/index';
 import StatusComponent from '../status/index';
 import './style.scss';
 
 type Props = {
   question: Question;
-  totalScore: number;
-  health: number;
+  player: Player;
   isLast: boolean;
   next: (a: Answer) => void;
   countdownExpire: () => void;
@@ -16,7 +15,7 @@ type Props = {
 const QuestionComponent = (props: Props) => {
   const [answer, setAnswer] = useState<Answer>();
   const [showAnswerResult, setShowAnswerResult] = useState(false);
-  const { next, countdownExpire, question, isLast, health, totalScore } = props;
+  const { next, countdownExpire, question, isLast, player } = props;
 
   const answerHandle = (answer: Answer) => {
     if (!isLast) {
@@ -47,12 +46,7 @@ const QuestionComponent = (props: Props) => {
 
   return (
     <>
-      <StatusComponent
-        totalScore={totalScore}
-        health={health}
-        countdown={question.timeout}
-        countdownExpire={countdownExpire}
-      />
+      <StatusComponent player={player} countdown={question.timeout} countdownExpire={countdownExpire} />
       <div className='question'>
         <div className='title'>{question.title}</div>
         <div className='answers'>

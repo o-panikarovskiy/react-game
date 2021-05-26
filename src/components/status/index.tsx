@@ -1,19 +1,19 @@
 import React from 'react';
+import { Player } from '../../store/models';
 import CountdownComponent from '../countdown/index';
 import './style.scss';
 
 type Props = {
   countdown: number;
-  totalScore: number;
-  health: number;
+  player: Player;
   countdownExpire: () => void;
 };
 
-const StatusComponent = ({ countdownExpire, countdown, totalScore, health }: Props) => {
+const StatusComponent = ({ countdownExpire, countdown, player }: Props) => {
   return (
     <div className='status'>
-      <span>Score: ${totalScore}</span>
-      <span>Health: ♥️{health}</span>
+      <span>Score: ${player.score}</span>
+      <span>Health: ♥️{player.health}</span>
       <span>
         Timer: <CountdownComponent seconds={countdown} expire={countdownExpire} />
       </span>
