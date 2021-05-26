@@ -1,48 +1,57 @@
+@import '~styles/vars.scss';
+
 .question {
   width: 100%;
+  height: 100%;
   margin-top: 20px;
-  .title {
-    text-align: center;
-    font-weight: bold;
-  }
 
   .answers {
-    margin-top: 10px;
     display: flex;
     align-items: center;
     flex-direction: column;
   }
-}
 
-.answer-result {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-
-  .btn {
-    border-radius: 6px;
+  .answer {
+    background-color: $answer-color;
     color: #000;
-    width: 300px;
-  }
+    width: 200px;
+    margin-bottom: 10px;
 
-  &.correct {
-    .btn {
-      background-color: #37ff73;
-
-      &:hover {
-        background-color: #70ff70;
-      }
+    &:hover {
+      background-color: #ddd;
     }
   }
-  &.incorrect {
+
+  .result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .title {
+      color: #000;
+      width: 100%;
+    }
+
     .btn {
-      background-color: #ff3737;
+      border-radius: 6px;
+      color: #000;
+      width: 300px;
+      background-color: $accent-color;
 
       &:hover {
-        background-color: #ff7070;
+        background-color: $hover-color;
+      }
+    }
+
+    &.correct {
+      .title {
+        background-color: $correct-answer-color;
+      }
+    }
+    &.incorrect {
+      .title {
+        background-color: $incorrect-answer-color;
       }
     }
   }

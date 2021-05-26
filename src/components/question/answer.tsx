@@ -4,15 +4,16 @@ import './style.scss';
 
 type Props = {
   answer: Answer;
+  disabled?: boolean;
   getAnswer: () => void;
 };
 
-const AnswerComponent = ({ getAnswer, answer }: Props) => {
+const AnswerButtonComponent = ({ getAnswer, disabled, answer }: Props) => {
   return (
-    <button className='answer-btn' onClick={getAnswer}>
+    <button className='answer' disabled={disabled} onClick={getAnswer}>
       {answer.label}
     </button>
   );
 };
 
-export default AnswerComponent;
+export default AnswerButtonComponent;

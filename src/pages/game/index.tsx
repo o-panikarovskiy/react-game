@@ -24,28 +24,27 @@ const Game = () => {
     load();
   }, [dispatch]);
 
-  const { currentQuestion, questions, player } = state;
-  const isLast = questions[questions.length - 1] === currentQuestion;
+  const { currentQuestion, player, gameStatus } = state;
 
   let errorNode: ReactNode;
   let questionNode: ReactNode;
   let loadingNode: ReactNode;
 
   if (isLoading) {
-    loadingNode = <div>Loading...</div>;
+    loadingNode = <div className='title'>Loading questions...</div>;
   }
 
   if (loadingError) {
-    errorNode = <div>{loadingError.message}</div>;
+    errorNode = <div className='title'>{loadingError.message}</div>;
   }
 
   if (currentQuestion) {
     questionNode = (
       <QuestionComponent
-        isLast={isLast}
-        player={player!}
+        player={player}
+        gameStatus={gameStatus}
         question={currentQuestion}
-        next={(a) => store.setAnswer(dispatch, player!, currentQuestion, a)}
+        next={(a) => store.setAnswer(dispatch, player, currentQuestion, a)}
         countdownExpire={() => store.answerTimesUp(dispatch)}
       />
     );

@@ -1,10 +1,9 @@
 export type GameStatus = 'started' | 'finished';
 
 export type GameState = {
-  readonly ratings: readonly Player[];
   readonly questions: readonly Question[];
   readonly currentQuestion?: Question;
-  readonly player?: Player;
+  readonly player: Player;
   readonly gameStatus?: GameStatus;
 };
 
@@ -13,6 +12,7 @@ export type Question = {
   readonly answers: Answer[];
   readonly timeout: number;
   readonly score: number;
+  readonly isLast?: boolean;
 };
 
 export type Answer = {
@@ -27,6 +27,6 @@ export type Player = {
 };
 
 export type AnswerResponse = {
-  readonly ratings: readonly Player[];
+  readonly gameStatus: GameStatus;
   readonly player: Player;
 };

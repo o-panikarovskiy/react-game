@@ -58,5 +58,26 @@
         "right": true
       }
     ]
+  },
+  {
+    "title": "Question #4",
+    "timeout": 25,
+    "score": 300,
+    "isLast": true,
+    "answers": [
+      {
+        "label": "A1"
+      },
+      {
+        "label": "A2"
+      },
+      {
+        "label": "A3"
+      },
+      {
+        "label": "A4",
+        "right": true
+      }
+    ]
   }
 ]

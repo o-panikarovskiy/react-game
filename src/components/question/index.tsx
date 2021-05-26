@@ -1,26 +1,25 @@
-import React, { useState } from 'react';
-import { Answer, Player, Question } from '../../store/models';
-import AnswerComponent from '../answer/index';
+import AnswersList from 'components/question/answers-list';
+import QuestionResult from 'components/question/result';
+import React, { ReactNode, useState } from 'react';
+import { Answer, GameStatus, Player, Question } from '../../store/models';
 import StatusComponent from '../status/index';
 import './style.scss';
 
 type Props = {
-  question: Question;
   player: Player;
-  isLast: boolean;
+  question: Question;
+  gameStatus?: GameStatus;
   next: (a: Answer) => void;
   countdownExpire: () => void;
 };
 
 const QuestionComponent = (props: Props) => {
   const [answer, setAnswer] = useState<Answer>();
-  const [showAnswerResult, setShowAnswerResult] = useState(false);
-  const { next, countdownExpire, question, isLast, player } = props;
+  const { next, countdownExpire, question, player, gameStatus } = props;
 
   const answerHandle = (answer: Answer) => {
-    if (!isLast) {
+    if (!question.isLast) {
       setAnswer(answer);
-      setShowAnswerResult(true);
     } else {
       next(answer);
     }
@@ -28,32 +27,29 @@ const QuestionComponent = (props: Props) => {
 
   const nextQuestionHandle = () => {
     if (answer) {
-      setShowAnswerResult(false);
       next(answer);
+      setAnswer(void 0);
     }
   };
 
-  if (showAnswerResult) {
-    return (
-      <div className={`answer-result ${answer?.right ? 'correct' : 'incorrect'} `}>
-        {answer?.right ? <div>+${question.score}</div> : <div>-1 ♥️</div>}
-        <button className='btn' onClick={nextQuestionHandle}>
-          Next Question
-        </button>
-      </div>
-    );
+  let qBody: ReactNode;
+  if (answer) {
+    qBody = <QuestionResult answer={answer} question={question} gameStatus={gameStatus} next={nextQuestionHandle} />;
+  } else {
+    qBody = <AnswersList answers={question.answers} getAnswer={answerHandle} />;
   }
 
   return (
     <>
-      <StatusComponent player={player} countdown={question.timeout} countdownExpire={countdownExpire} />
+      <StatusComponent
+        player={player}
+        stopTimer={!!answer}
+        countdown={question.timeout}
+        countdownExpire={countdownExpire}
+      />
       <div className='question'>
         <div className='title'>{question.title}</div>
-        <div className='answers'>
-          {question.answers.map((a) => (
-            <AnswerComponent key={a.label} answer={a} getAnswer={() => answerHandle(a)} />
-          ))}
-        </div>
+        {qBody}
       </div>
     </>
   );

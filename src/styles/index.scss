@@ -1,12 +1,10 @@
+@import './vars.scss';
+
 html {
   box-sizing: border-box;
   font-size: 20px;
   overflow: hidden;
   height: 100%;
-
-  @media (max-width: 1018px) {
-    font-size: 17px;
-  }
 }
 
 *,
@@ -17,19 +15,34 @@ html {
   padding: 0;
 }
 
+*:focus {
+  outline: none;
+}
+
+input {
+  padding: 5px;
+  &::placeholder {
+    font-weight: 100;
+    font-family: $font;
+  }
+}
+
 button {
   border: 0;
   cursor: pointer;
   outline: none;
+  font-family: $font;
   background-color: #fff;
-  min-height: 3.2rem;
-  padding: 0 0.5rem;
+  min-height: 40px;
+  padding: 5px;
 }
 
 body,
 #root {
   overflow: hidden;
   height: 100%;
+  font-family: $font;
+  color: $text-color;
 }
 
 #root {
@@ -40,4 +53,15 @@ body,
 
 ul {
   list-style-type: none;
+}
+
+.title {
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  min-height: 40px;
+  line-height: 40px;
+  margin-bottom: 20px;
+  padding: 0 20px;
 }

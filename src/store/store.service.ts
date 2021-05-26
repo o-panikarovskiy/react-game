@@ -26,6 +26,10 @@ export const setAnswer = async (
   return res;
 };
 
-export const answerTimesUp = async (dispatch: Dispatch<Action>) => {
+export const answerTimesUp = async (dispatch: Dispatch<Action>): Promise<void> => {
   dispatch(new ActionQuestionTimesUp());
+};
+
+export const getRatings = async (): Promise<readonly Player[]> => {
+  return backend.getRatings();
 };

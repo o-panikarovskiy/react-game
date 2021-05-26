@@ -4,20 +4,23 @@ import CountdownComponent from '../countdown/index';
 import './style.scss';
 
 type Props = {
-  countdown: number;
   player: Player;
+  stopTimer: boolean;
+  countdown: number;
   countdownExpire: () => void;
 };
 
-const StatusComponent = ({ countdownExpire, countdown, player }: Props) => {
+const StatusComponent = ({ countdownExpire, countdown, player, stopTimer }: Props) => {
   return (
-    <div className='status'>
-      <span>Score: ${player.score}</span>
-      <span>Health: ♥️{player.health}</span>
-      <span>
-        Timer: <CountdownComponent seconds={countdown} expire={countdownExpire} />
-      </span>
-    </div>
+    <ul className='status'>
+      <li>Score: ${player.score}</li>
+      <li>Health: ♥️{player.health}</li>
+      {!stopTimer && (
+        <li>
+          Timer: <CountdownComponent seconds={countdown} expire={countdownExpire} />
+        </li>
+      )}
+    </ul>
   );
 };
 

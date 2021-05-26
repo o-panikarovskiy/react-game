@@ -1,3 +1,5 @@
+@import '~styles/vars.scss';
+
 .home {
   display: flex;
   justify-content: center;
@@ -5,35 +7,17 @@
   flex-direction: column;
 
   .start-btn {
-    background-color: #ff8b37;
+    background-color: $accent-color;
     border-radius: 6px;
     color: #fff;
     width: 300px;
     margin-top: 10px;
 
     &:hover {
-      background-color: #ffac70;
+      background-color: $hover-color;
     }
-
     &:disabled {
-      background-color: #ccc;
-    }
-  }
-
-  .score {
-    text-align: center;
-    background-color: #fff;
-    margin-bottom: 20px;
-  }
-
-  .ratings {
-    background-color: #fff;
-    width: 100%;
-
-    td {
-      &:first-child {
-        width: 400px;
-      }
+      background-color: $disabled-color;
     }
   }
 
@@ -41,5 +25,24 @@
     height: 32px;
     font-size: 16px;
     width: 100%;
+  }
+
+  .score {
+    padding: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    background-color: #000;
+  }
+
+  .ratings {
+    width: 100%;
+    background-color: #000;
+
+    td {
+      padding: 5px;
+      &:first-child {
+        width: 300px;
+      }
+    }
   }
 }
