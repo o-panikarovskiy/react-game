@@ -11,7 +11,11 @@ export const getOrCreatePlayer = async (name: string): Promise<Player> => {
 export const getAllQuestions = async (): Promise<readonly Question[]> => {
   try {
     const res = await fetch('../data/questions.json');
-    const questions = await res.json();
+    const questions: Question[] = await res.json();
+
+    const last = questions[questions.length - 1];
+    questions[questions.length - 1] = { ...last, isLast: true };
+
     return questions;
   } catch (error) {
     throw parseFetchError(error);
