@@ -1,27 +1,26 @@
 import React, { useContext, useState } from 'react';
 import { GameContext } from '../../store/context';
-import * as store from '../../store/store.service';
 
 const StartScreen = () => {
-  const { dispatch, state } = useContext(GameContext);
+  const { startGame, state } = useContext(GameContext);
   const [username, setUsername] = useState(state.player?.name || '');
 
-  const startGame = () => {
+  const startGameHandler = () => {
     if (username) {
-      store.startGame(dispatch, username);
+      startGame(username);
     }
   };
 
   return (
-    <section className='home'>
+    <section className="home">
       <input
-        className='username'
-        type='text'
-        placeholder='Enter your name'
-        onKeyUp={(e) => e.key === 'Enter' && startGame()}
+        className="username"
+        type="text"
+        placeholder="Enter your name"
+        onKeyUp={(e) => e.key === 'Enter' && startGameHandler()}
         onChange={(e) => setUsername(e.target.value)}
       />
-      <button className='start-btn' disabled={!username} onClick={startGame}>
+      <button className="start-btn" disabled={!username} onClick={startGameHandler}>
         Start
       </button>
     </section>

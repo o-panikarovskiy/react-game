@@ -1,6 +1,6 @@
 import React from 'react';
 import { Player } from '../../store/models';
-import CountdownComponent from '../countdown/index';
+import CountdownComponent from '../countdown/countdown';
 import './style.scss';
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
 
 const StatusComponent = ({ countdownExpire, countdown, player, stopTimer }: Props) => {
   return (
-    <ul className='status'>
+    <ul className="status">
       <li>Score: ${player.score}</li>
       <li>Health: ♥️{player.health}</li>
       {!stopTimer && (

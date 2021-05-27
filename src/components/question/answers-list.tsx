@@ -10,7 +10,7 @@ type Props = {
 
 const AnswersList = ({ getAnswer, answers }: Props) => {
   return (
-    <div className='answers'>
+    <div className="answers">
       {answers.map((a) => (
         <AnswerButtonComponent key={a.label} answer={a} getAnswer={() => getAnswer(a)} />
       ))}

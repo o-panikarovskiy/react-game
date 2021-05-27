@@ -1,9 +1,8 @@
 import { AnswerResponse, Player, Question } from './models';
 
 export const START_GAME = '[Game] start';
-
 export const SET_ANSWER = '[Game] set answer';
-export const SET_QUESTIONS = '[Game] req questions list';
+export const SET_QUESTIONS = '[Game] set questions list';
 export const QUESTION_TIMES_UP = '[Game] question times up';
 
 export class ActionStartGame {

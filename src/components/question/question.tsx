@@ -2,7 +2,7 @@ import AnswersList from 'components/question/answers-list';
 import QuestionResult from 'components/question/result';
 import React, { ReactNode, useState } from 'react';
 import { Answer, GameStatus, Player, Question } from '../../store/models';
-import StatusComponent from '../status/index';
+import StatusComponent from '../status/status';
 import './style.scss';
 
 type Props = {
@@ -41,14 +41,9 @@ const QuestionComponent = (props: Props) => {
 
   return (
     <>
-      <StatusComponent
-        player={player}
-        stopTimer={!!answer}
-        countdown={question.timeout}
-        countdownExpire={countdownExpire}
-      />
-      <div className='question'>
-        <div className='title'>{question.title}</div>
+      <StatusComponent player={player} stopTimer={!!answer} countdown={question.timeout} countdownExpire={countdownExpire} />
+      <div className="question">
+        <div className="title">{question.title}</div>
         {qBody}
       </div>
     </>

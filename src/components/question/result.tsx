@@ -16,8 +16,8 @@ const QuestionResult = ({ answer, question, gameStatus, next }: Props) => {
 
   return (
     <div className={`result ${answer?.right ? 'correct' : 'incorrect'} `}>
-      <div className='title'>{title}</div>
-      <button className='btn' onClick={() => next()}>
+      <div className="title">{title}</div>
+      <button className="btn" onClick={() => next()}>
         {nextTitle}
       </button>
     </div>

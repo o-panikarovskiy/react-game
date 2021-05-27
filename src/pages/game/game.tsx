@@ -1,28 +1,33 @@
 import React, { ReactNode, useContext, useEffect, useState } from 'react';
-import QuestionComponent from '../../components/question/index';
+import QuestionComponent from '../../components/question/question';
 import { GameContext } from '../../store/context';
-import * as store from '../../store/store.service';
 import { AppError } from '../../types/http-error';
 import './style.scss';
 
 const Game = () => {
-  const { state, dispatch } = useContext(GameContext);
-  const [isLoading, setIsloading] = useState(true);
+  const { state, fetchQuestions, setAnswer, answerTimesUp } = useContext(GameContext);
+  const [isLoading, setIsloading] = useState(false);
   const [loadingError, setIsloadingError] = useState<AppError>();
 
   useEffect(() => {
-    const load = async () => {
+    const abortCtrl = new AbortController();
+
+    (async () => {
       try {
         setIsloading(true);
-        await store.fetchQuestions(dispatch);
+        await fetchQuestions(abortCtrl.signal);
+        setIsloading(false);
       } catch (error) {
+        if (abortCtrl.signal.aborted) return;
         setIsloadingError(error);
       } finally {
+        if (abortCtrl.signal.aborted) return;
         setIsloading(false);
       }
-    };
-    load();
-  }, [dispatch]);
+    })();
+
+    return () => abortCtrl.abort();
+  }, [fetchQuestions]);
 
   const { currentQuestion, player, gameStatus } = state;
 
@@ -31,11 +36,11 @@ const Game = () => {
   let loadingNode: ReactNode;
 
   if (isLoading) {
-    loadingNode = <div className='title'>Loading questions...</div>;
+    loadingNode = <div className="title">Loading questions...</div>;
   }
 
   if (loadingError) {
-    errorNode = <div className='title'>{loadingError.message}</div>;
+    errorNode = <div className="title">{loadingError.message}</div>;
   }
 
   if (currentQuestion) {
@@ -44,14 +49,14 @@ const Game = () => {
         player={player}
         gameStatus={gameStatus}
         question={currentQuestion}
-        next={(a) => store.setAnswer(dispatch, player, currentQuestion, a)}
-        countdownExpire={() => store.answerTimesUp(dispatch)}
+        next={(a) => setAnswer(player, currentQuestion, a)}
+        countdownExpire={answerTimesUp}
       />
     );
   }
 
   return (
-    <div className='game'>
+    <div className="game">
       {loadingNode}
       {errorNode}
       {questionNode}

@@ -1,47 +1,46 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { GameContext } from 'store/context';
 import { Player } from 'store/models';
 import { AppError } from 'types/http-error';
-import * as store from '../../store/store.service';
 import './style.scss';
 
 const Ratings = () => {
+  const { getRatings } = useContext(GameContext);
   const [isLoading, setIsloading] = useState(true);
   const [ratings, setRatings] = useState<readonly Player[]>([]);
   const [loadingError, setIsloadingError] = useState<AppError>();
 
   useEffect(() => {
-    let destroyed = false;
+    const abortCtrl = new AbortController();
 
     (async () => {
       try {
         setIsloading(true);
-        const res = await store.getRatings();
-        if (destroyed) return;
+        const res = await getRatings();
+        if (abortCtrl.signal.aborted) return;
         setRatings(res);
       } catch (error) {
-        if (destroyed) return;
+        if (abortCtrl.signal.aborted) return;
         setIsloadingError(error);
       } finally {
-        if (destroyed) return;
+        if (abortCtrl.signal.aborted) return;
         setIsloading(false);
       }
     })();
 
-    return () => {
-      destroyed = true;
-    };
-  }, []);
+    return () => abortCtrl.abort();
+  }, [getRatings]);
 
   if (isLoading) {
-    return <div className='title'>Loading rating table...</div>;
+    return <div className="title">Loading rating table...</div>;
   }
 
   if (loadingError) {
-    return <div className='title'>{loadingError.message}</div>;
+    return <div className="title">{loadingError.message}</div>;
   }
 
   return (
-    <table className='ratings'>
+    <table className="ratings">
       <tbody>
         {ratings.map((p) => (
           <tr key={p.name}>

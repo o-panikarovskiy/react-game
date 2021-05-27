@@ -10,7 +10,7 @@ type Props = {
 
 const AnswerButtonComponent = ({ getAnswer, disabled, answer }: Props) => {
   return (
-    <button className='answer' disabled={disabled} onClick={getAnswer}>
+    <button className="answer" disabled={disabled} onClick={getAnswer}>
       {answer.label}
     </button>
   );
