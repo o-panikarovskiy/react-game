@@ -12,7 +12,6 @@ export type Question = {
   readonly answers: Answer[];
   readonly timeout: number;
   readonly score: number;
-  readonly isLast?: boolean;
 };
 
 export type Answer = {

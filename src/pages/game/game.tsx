@@ -5,7 +5,7 @@ import { AppError } from '../../types/http-error';
 import './style.scss';
 
 const Game = () => {
-  const { state, fetchQuestions, setAnswer, answerTimesUp } = useContext(GameContext);
+  const { state, fetchQuestions } = useContext(GameContext);
   const [isLoading, setIsloading] = useState(false);
   const [loadingError, setIsloadingError] = useState<AppError>();
 
@@ -29,8 +29,6 @@ const Game = () => {
     return () => abortCtrl.abort();
   }, [fetchQuestions]);
 
-  const { currentQuestion, player, gameStatus } = state;
-
   let errorNode: ReactNode;
   let questionNode: ReactNode;
   let loadingNode: ReactNode;
@@ -40,19 +38,11 @@ const Game = () => {
   }
 
   if (loadingError) {
-    errorNode = <div className="title">{loadingError.message}</div>;
+    errorNode = <div className="title error">{loadingError.message}</div>;
   }
 
-  if (currentQuestion) {
-    questionNode = (
-      <QuestionComponent
-        player={player}
-        gameStatus={gameStatus}
-        question={currentQuestion}
-        next={(a) => setAnswer(player, currentQuestion, a)}
-        countdownExpire={answerTimesUp}
-      />
-    );
+  if (state.currentQuestion) {
+    questionNode = <QuestionComponent />;
   }
 
   return (

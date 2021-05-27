@@ -1,12 +1,5 @@
 @import './vars.scss';
 
-html {
-  box-sizing: border-box;
-  font-size: 20px;
-  overflow: hidden;
-  height: 100%;
-}
-
 *,
 *::after,
 *::before {
@@ -17,6 +10,27 @@ html {
 
 *:focus {
   outline: none;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 20px;
+  overflow: hidden;
+  height: 100%;
+}
+
+body,
+#root {
+  overflow: hidden;
+  height: 100%;
+  font-family: $font;
+  color: $text-color;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 input {
@@ -35,20 +49,10 @@ button {
   background-color: #fff;
   min-height: 40px;
   padding: 5px;
-}
 
-body,
-#root {
-  overflow: hidden;
-  height: 100%;
-  font-family: $font;
-  color: $text-color;
-}
-
-#root {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  &:disabled {
+    background-color: $disabled-color !important;
+  }
 }
 
 ul {

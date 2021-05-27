@@ -1,4 +1,4 @@
-import Action, { QUESTION_TIMES_UP, SET_ANSWER, SET_QUESTIONS, START_GAME } from './actions';
+import Action, { NEXT_QUESTION, QUESTION_TIMES_UP, SET_ANSWER, SET_QUESTIONS, START_GAME } from './actions';
 import { GameState } from './models';
 
 export const initialState: GameState = {
@@ -18,14 +18,23 @@ export const reducer = (state: GameState, action: Action): GameState => {
 
     case SET_ANSWER: {
       const { player, gameStatus } = action.payload;
-      const { currentQuestion, questions } = state;
-
-      const qidx = questions.findIndex((q) => q === currentQuestion);
-      const nextQuestion = questions[qidx + 1];
 
       return {
         ...state,
         player,
+        gameStatus,
+      };
+    }
+
+    case NEXT_QUESTION: {
+      const { currentQuestion, questions, player } = state;
+
+      const qidx = questions.findIndex((q) => q === currentQuestion);
+      const nextQuestion = questions[qidx + 1];
+      const gameStatus = player.health === 0 || !nextQuestion ? 'finished' : state.gameStatus;
+
+      return {
+        ...state,
         gameStatus,
         currentQuestion: nextQuestion,
       };

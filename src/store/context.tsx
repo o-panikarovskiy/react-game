@@ -1,6 +1,6 @@
 import React, { createContext, ReactNode, useCallback, useReducer } from 'react';
 import backend from 'store/backend.service';
-import { ActionQuestionTimesUp, ActionSetAnswer, ActionSetQuestionsList, ActionStartGame } from './actions';
+import { ActionNextQuestion, ActionQuestionTimesUp, ActionSetAnswer, ActionSetQuestionsList, ActionStartGame } from './actions';
 import { Answer, AnswerResponse, GameState, Player, Question } from './models';
 import { initialState, reducer } from './reducer';
 
@@ -14,7 +14,8 @@ type GameContextProvider = {
   getRatings: (top?: number, signal?: AbortSignal) => Promise<readonly Player[]>;
   startGame: (name: string, signal?: AbortSignal) => Promise<Player>;
   fetchQuestions: (signal?: AbortSignal) => Promise<readonly Question[]>;
-  setAnswer: (p: Player, q: Question, a: Answer, signal?: AbortSignal) => Promise<AnswerResponse>;
+  sendAnswerToServer: (p: Player, q: Question, a: Answer, signal?: AbortSignal) => Promise<AnswerResponse>;
+  nextQuestion: () => void;
 };
 
 export const GameContext = createContext<GameContextProvider>({} as GameContextProvider);
@@ -42,19 +43,24 @@ export const Store = ({ children }: Props) => {
     return questions;
   }, []);
 
-  const setAnswer = useCallback(async (p: Player, q: Question, a: Answer, signal?: AbortSignal): Promise<AnswerResponse> => {
+  const sendAnswerToServer = useCallback(async (p: Player, q: Question, a: Answer, signal?: AbortSignal): Promise<AnswerResponse> => {
     const res = await backend.setAnswer(p, q, a, signal);
     dispatch(new ActionSetAnswer(res));
     return res;
   }, []);
 
+  const nextQuestion = useCallback(() => {
+    dispatch(new ActionNextQuestion());
+  }, []);
+
   const provider: GameContextProvider = {
     state,
     startGame,
-    setAnswer,
+    sendAnswerToServer,
     getRatings,
     answerTimesUp,
     fetchQuestions,
+    nextQuestion,
   };
 
   return <GameContext.Provider value={provider}>{children}</GameContext.Provider>;

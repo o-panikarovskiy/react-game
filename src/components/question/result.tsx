@@ -12,7 +12,7 @@ const QuestionResult = ({ answer, question, gameStatus, next }: Props) => {
   const correctTitle = `😀 You are right! + $${question.score}`;
   const inCorrectTitle = `🙁 You are wrong! -1 ♥️`;
   const title = answer.right ? correctTitle : inCorrectTitle;
-  const nextTitle = gameStatus === 'finished' || question.isLast ? 'Show results' : ' Next Question';
+  const nextTitle = gameStatus === 'finished' ? 'Show results' : ' Next Question';
 
   return (
     <div className={`result ${answer?.right ? 'correct' : 'incorrect'} `}>

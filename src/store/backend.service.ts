@@ -12,10 +12,6 @@ const getAllQuestions = async (signal?: AbortSignal): Promise<readonly Question[
   try {
     const res = await fetch('../data/questions.json', { signal });
     const questions: Question[] = await res.json();
-
-    const last = questions[questions.length - 1];
-    questions[questions.length - 1] = { ...last, isLast: true };
-
     return questions;
   } catch (error) {
     throw parseFetchError(error);
@@ -27,7 +23,7 @@ const setAnswer = async (p: Player, q: Question, a: Answer, signal?: AbortSignal
   const health = p.health - (a.right ? 0 : 1);
 
   const player = { ...p, score, health };
-  const gameStatus: GameStatus = q.isLast || player.health === 0 ? 'finished' : 'started';
+  const gameStatus: GameStatus = player.health === 0 ? 'finished' : 'started';
 
   savePlayer(player);
 

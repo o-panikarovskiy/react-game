@@ -1,47 +1,44 @@
 import AnswersList from 'components/question/answers-list';
 import QuestionResult from 'components/question/result';
-import React, { ReactNode, useState } from 'react';
-import { Answer, GameStatus, Player, Question } from '../../store/models';
+import React, { ReactNode, useContext, useEffect, useState } from 'react';
+import { GameContext } from 'store/context';
+import { Answer, Question } from '../../store/models';
 import StatusComponent from '../status/status';
 import './style.scss';
 
-type Props = {
-  player: Player;
-  question: Question;
-  gameStatus?: GameStatus;
-  next: (a: Answer) => void;
-  countdownExpire: () => void;
-};
+const QuestionComponent = () => {
+  const { state, answerTimesUp, sendAnswerToServer, nextQuestion } = useContext(GameContext);
+  const [resultAnswer, showResultAnswer] = useState<Answer>();
+  const [isSending, setIsSending] = useState(false);
 
-const QuestionComponent = (props: Props) => {
-  const [answer, setAnswer] = useState<Answer>();
-  const { next, countdownExpire, question, player, gameStatus } = props;
+  const { player, currentQuestion, gameStatus } = state;
+  const question = currentQuestion as Question;
 
-  const answerHandle = (answer: Answer) => {
-    if (!question.isLast) {
-      setAnswer(answer);
-    } else {
-      next(answer);
+  const sendAnswer = async (answer: Answer) => {
+    setIsSending(true);
+    const { gameStatus } = await sendAnswerToServer(player, question, answer);
+
+    if (gameStatus !== 'finished') {
+      setIsSending(false);
+      showResultAnswer(answer);
     }
   };
 
-  const nextQuestionHandle = () => {
-    if (answer) {
-      next(answer);
-      setAnswer(void 0);
-    }
-  };
+  useEffect(() => {
+    setIsSending(false);
+    showResultAnswer(void 0);
+  }, [question]);
 
   let qBody: ReactNode;
-  if (answer) {
-    qBody = <QuestionResult answer={answer} question={question} gameStatus={gameStatus} next={nextQuestionHandle} />;
+  if (resultAnswer) {
+    qBody = <QuestionResult answer={resultAnswer} question={question} gameStatus={gameStatus} next={nextQuestion} />;
   } else {
-    qBody = <AnswersList answers={question.answers} getAnswer={answerHandle} />;
+    qBody = <AnswersList answers={question.answers} disabled={isSending} getAnswer={(a) => sendAnswer(a)} />;
   }
 
   return (
     <>
-      <StatusComponent player={player} stopTimer={!!answer} countdown={question.timeout} countdownExpire={countdownExpire} />
+      <StatusComponent player={player} stopTimer={!!resultAnswer || isSending} countdown={question.timeout} countdownExpire={answerTimesUp} />
       <div className="question">
         <div className="title">{question.title}</div>
         {qBody}
